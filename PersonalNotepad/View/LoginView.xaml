@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:local="clr-namespace:PersonalNotepad.View"
+        xmlns:common="clr-namespace:PersonalNotepad.Common"
         mc:Ignorable="d"
         Name="LoginWindow"
         Title="软件登录" Height="600" Width="360"
@@ -73,7 +74,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="&#xe682;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
                         VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
-                    <TextBox Text="啊啊啊啊" Grid.Column="1" Height="40"/>
+                    <TextBox Text="{Binding LoginModel.UserName}" Grid.Column="1" Height="40"/>
                 </Grid>
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
@@ -82,7 +83,9 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="&#xe82b;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
                         VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
-                    <PasswordBox Password="啊啊啊啊" Grid.Column="1" Height="40"/>
+                    <PasswordBox  Grid.Column="1" Height="40"
+                                 common:PasswordHelper.Attach="true" 
+                                 common:PasswordHelper.Password="{Binding LoginModel.Password}"/>
                 </Grid>
                 <Grid Grid.Row="3">
                     <Grid.ColumnDefinitions>
@@ -92,7 +95,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="&#xe63d;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
                         VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
-                    <TextBox Text="啊啊啊啊" Grid.Column="1" Height="40"/>
+                    <TextBox Text="{Binding LoginModel.ValidationCode}" Grid.Column="1" Height="40"/>
                     <Image Grid.Column="2"/>
                 </Grid>
                 <Button Content="登录" Margin="5" Style="{StaticResource ButtonPrimary}" Grid.Row="4"/>
