@@ -45,7 +45,7 @@ namespace PersonalNotepad.Common
             password.PasswordChanged -= Password_PasswordChanged;
             if (!_isUpdating)
             {
-                password.Password = e.NewValue.ToString();
+                password.Password = e.NewValue?.ToString();
                 password.PasswordChanged += Password_PasswordChanged;
             }
         }

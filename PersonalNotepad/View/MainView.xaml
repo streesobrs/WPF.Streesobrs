@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         xmlns:local="clr-namespace:PersonalNotepad"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="个人记事本" Height="900" Width="800">
     <Grid>
         <TabControl Margin="10" Style="{StaticResource TabControlCapsuleSolid}">
@@ -15,16 +15,62 @@
                     <hc:TransitioningContentControl>
                         <hc:AutoCompleteTextBox Width="380" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="32" ItemsSource="{Binding Items}" Text="{Binding SearchText}" DisplayMemberPath="Name"/>
                     </hc:TransitioningContentControl>
+                    <!--列表（用来读取数据库然后显示笔记列表）-->
+                    <DataGrid HeadersVisibility="All" RowHeaderWidth="60" AutoGenerateColumns="False" ItemsSource="{Binding DataList}">
+                        <DataGrid.RowHeaderTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected,RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
+                            </DataTemplate>
+                        </DataGrid.RowHeaderTemplate>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn IsReadOnly="True" Width="80" CanUserResize="False" Binding="{Binding Index}" Header="日期"/>
+                            <DataGridTemplateColumn Width="60" CanUserResize="False">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding ImgPath}" Width="32" Height="32" Stretch="Uniform"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Width="1" Binding="{Binding Name}" Header="标题"/>
+                            <DataGridTextColumn Width="1" Binding="{Binding Remark}" Header="内容"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <Button Content="Button" Click="Button_Click"/>
                 </StackPanel>
-                <!--列表（用来读取数据库然后显示笔记列表）-->
-                
             </TabItem>
             <TabItem Header="笔记">
-                <!--标题-->
-                <!--<hc:Rate DefaultValue="3" AllowClear="False" AllowHalf="True" Margin="0,16,0,0" Foreground="{DynamicResource DangerBrush}" Icon="{StaticResource LoveGeometry}"/>-->
-                <!--内容（可以包含一个富文本编辑器）-->
-                <!--按钮（新建、导入、导出、保存……）-->
+                <StackPanel Margin="10">
+                    <!-- 标题和日期 -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,0,0,10">
+                        <TextBlock Text="标题" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBox Width="200" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <TextBlock Text="日期" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        <hc:DateTimePicker Width="200" VerticalAlignment="Center" Margin="0,0,10,0" hc:InfoElement.ShowClearButton="True"/>
+                    </StackPanel>
+
+                    <!-- 富文本编辑器 -->
+                    <RichTextBox Height="400" Margin="0,0,0,10">
+                        <FlowDocument>
+                            <Paragraph>
+                                在这里输入笔记内容...
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+
+                    <!-- 按钮 -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="新建" Width="80" Margin="5"/>
+                        <hc:SplitButton Content="导入" Command="{Binding ImportCommand}" HorizontalAlignment="Stretch">
+                            <hc:SplitButton.DropDownContent>
+                                <StackPanel>
+                                    <MenuItem Header="导入" Command="{Binding ImportCommand}" Width="80"/>
+                                    <MenuItem Header="导出" Command="{Binding ExportCommand}" Width="80"/>
+                                </StackPanel>
+                            </hc:SplitButton.DropDownContent>
+                        </hc:SplitButton>
+                        <Button Content="保存" Width="80" Margin="5"/>
+                    </StackPanel>
+                </StackPanel>
             </TabItem>
             <TabItem Header="设置">
                 <hc:TransitioningContentControl>
@@ -33,21 +79,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <hc:PropertyGrid Width="500" SelectedObject="{Binding DemoModel}"/>
-                        <StackPanel hc:TitleElement.TitleWidth="168" Grid.Row="1" Margin="20,16,17,10">
-                            <TextBox hc:TitleElement.Title="String" hc:TitleElement.TitlePlacement="Left" Style="{StaticResource TextBoxExtend}" Text="{Binding DemoModel.String,Mode=OneWay}" IsReadOnly="True"/>
-                            <TextBox hc:TitleElement.Title="Enum" hc:TitleElement.TitlePlacement="Left" Style="{StaticResource TextBoxExtend}" Text="{Binding DemoModel.Enum,Mode=OneWay}" IsReadOnly="True" Margin="0,6,0,0"/>
-                            <TextBox hc:TitleElement.Title="Integer" hc:TitleElement.TitlePlacement="Left" Style="{StaticResource TextBoxExtend}" Text="{Binding DemoModel.Integer,Mode=OneWay}" IsReadOnly="True" Margin="0,6,0,0"/>
-                            <TextBox hc:TitleElement.Title="Boolean" hc:TitleElement.TitlePlacement="Left" Style="{StaticResource TextBoxExtend}" Text="{Binding DemoModel.Boolean,Mode=OneWay}" IsReadOnly="True" Margin="0,6,0,0"/>
-                            <TextBox hc:TitleElement.Title="HorizontalAlignment" hc:TitleElement.TitlePlacement="Left" Style="{StaticResource TextBoxExtend}" Text="{Binding DemoModel.HorizontalAlignment,Mode=OneWay}" IsReadOnly="True" Margin="0,6,0,0"/>
-                            <TextBox hc:TitleElement.Title="VerticalAlignment" hc:TitleElement.TitlePlacement="Left" Style="{StaticResource TextBoxExtend}" Text="{Binding DemoModel.VerticalAlignment,Mode=OneWay}" IsReadOnly="True" Margin="0,6,0,0"/>
-                            <GroupBox Style="{StaticResource GroupBoxOriginal}" Header="ImageSource" hc:TitleElement.TitlePlacement="Left" Margin="0,6,0,0">
-                                <hc:Gravatar HorizontalAlignment="Left" Source="{Binding DemoModel.ImageSource}"/>
-                            </GroupBox>
-                        </StackPanel>
+                        <TextBox Width="500" VerticalAlignment="Top" Margin="0,0,0,10" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"/>
+                        <ListBox ItemsSource="{Binding FilteredSettings}" DisplayMemberPath="Title" Width="500" Height="400"/>
                     </Grid>
                 </hc:TransitioningContentControl>
-                <!--用来各种软件设置（比如主题切换，数据库保存位置，检查更新……）-->
             </TabItem>
         </TabControl>
         <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right">

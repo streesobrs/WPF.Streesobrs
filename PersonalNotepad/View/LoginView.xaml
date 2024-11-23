@@ -33,76 +33,81 @@
         <Border.Effect>
             <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
         </Border.Effect>
-
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1.8*"/>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="80"/>
-            </Grid.RowDefinitions>
-
-            <Border Background="#007dfa" CornerRadius="10 10 0 0" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
-            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="40" Height="30" 
-                    Template="{StaticResource CloseButtonTemplate}" 
-                    Command="{Binding CloseWindowCommand}" 
-                    CommandParameter="{Binding ElementName=LoginWindow}"/>
-
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Border Width="100" Height="100">
-                    <Border.Background>
-                        <ImageBrush ImageSource="../Assets/Image/CarbonAlignBoxTopLeft.png"/>
-                    </Border.Background>
-                </Border>
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
-                    个人记事本
-                </TextBlock>
-            </StackPanel>
-
-            <Grid Grid.Row="1" Margin="20,10">
+            <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="45"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition MinHeight="23" Height="auto"/>
+                    <RowDefinition Height="1.8*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="&#xe682;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
-                        VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
-                    <TextBox Text="{Binding LoginModel.UserName}" Grid.Column="1" Height="40"/>
+
+                <Border Background="#007dfa" CornerRadius="10 10 0 0" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
+                <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="40" Height="30" 
+            Template="{StaticResource CloseButtonTemplate}" 
+            Command="{Binding CloseWindowCommand}" 
+            CommandParameter="{Binding ElementName=LoginWindow}"/>
+
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Border Width="100" Height="100">
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Assets/Image/CarbonAlignBoxTopLeft.png"/>
+                        </Border.Background>
+                    </Border>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+            个人记事本
+                    </TextBlock>
+                </StackPanel>
+
+                <Grid Grid.Row="1" Margin="20,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition MinHeight="23" Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xe682;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
+                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
+                        <TextBox Text="{Binding LoginModel.UserName}" Grid.Column="1" Height="40"/>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xe82b;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
+                            VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
+                        <PasswordBox Grid.Column="1" Height="40"
+                                common:PasswordHelper.Attach="true" 
+                                common:PasswordHelper.Password="{Binding LoginModel.Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="&#xe63d;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
+                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
+                        <TextBox Text="{Binding LoginModel.ValidationCode}" Grid.Column="1" Height="40"/>
+                        <TextBlock Name="Date" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="2"/>
+                    </Grid>
+                    <Button Content="登录" Margin="5" Style="{StaticResource ButtonPrimary}" Grid.Row="4"
+                            Command="{Binding LoginCommand}"
+                            CommandParameter="{Binding ElementName=LoginWindow}"/>
+                    <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Grid.Row="5" TextWrapping="Wrap"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="&#xe82b;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
-                        VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
-                    <PasswordBox  Grid.Column="1" Height="40"
-                                 common:PasswordHelper.Attach="true" 
-                                 common:PasswordHelper.Password="{Binding LoginModel.Password}"/>
-                </Grid>
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="80"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="&#xe63d;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
-                        VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
-                    <TextBox Text="{Binding LoginModel.ValidationCode}" Grid.Column="1" Height="40"/>
-                    <Image Grid.Column="2"/>
-                </Grid>
-                <Button Content="登录" Margin="5" Style="{StaticResource ButtonPrimary}" Grid.Row="4"/>
-                <TextBlock Text="登录失败" Foreground="Red" Grid.Row="5" TextWrapping="Wrap"
-                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
-            
+            <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right">
+                <StackPanel hc:Growl.GrowlParent="True" VerticalAlignment="Top" Margin="0,10,10,10"/>
+            </ScrollViewer>
         </Grid>
     </Border>
 </Window>
