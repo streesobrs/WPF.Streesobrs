@@ -26,5 +26,13 @@ namespace PersonalNotepad.View
 
             this.DataContext = new LoginViewModel();
         }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
     }
 }

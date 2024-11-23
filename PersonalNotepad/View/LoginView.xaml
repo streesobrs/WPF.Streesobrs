@@ -40,7 +40,7 @@
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
 
-            <Border Background="#007dfa" CornerRadius="10 10 0 0"/>
+            <Border Background="#007dfa" CornerRadius="10 10 0 0" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
             <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="40" Height="30" 
                     Template="{StaticResource CloseButtonTemplate}" 
                     Command="{Binding CloseWindowCommand}" 
