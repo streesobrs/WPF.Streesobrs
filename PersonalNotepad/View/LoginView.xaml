@@ -1,0 +1,105 @@
+﻿<Window x:Class="PersonalNotepad.View.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:local="clr-namespace:PersonalNotepad.View"
+        mc:Ignorable="d"
+        Name="LoginWindow"
+        Title="软件登录" Height="600" Width="360"
+        FontFamily="Microsoft YaHei" FontWeight="ExtraLight"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" AllowsTransparency="True" Background="{x:Null}">
+    <Window.Resources>
+        <ControlTemplate TargetType="Button" x:Key="CloseButtonTemplate">
+            <Border Background="Transparent" Name="back">
+                <Path Data="M0 0 12 12M0 12 12 0" Stroke="White" StrokeThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter TargetName="back" Property="Background" Value="#22FFFFFF"/>
+                    <Setter TargetName="back" Property="CornerRadius" Value="0 10 0 0"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter TargetName="back" Property="Background" Value="#44FFFFFF"/>
+                    <Setter TargetName="back" Property="CornerRadius" Value="0 10 0 0"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+    <Border Margin="5" Background="White" CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.8*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="80"/>
+            </Grid.RowDefinitions>
+
+            <Border Background="#007dfa" CornerRadius="10 10 0 0"/>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="40" Height="30" 
+                    Template="{StaticResource CloseButtonTemplate}" 
+                    Command="{Binding CloseWindowCommand}" 
+                    CommandParameter="{Binding ElementName=LoginWindow}"/>
+
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Border Width="100" Height="100">
+                    <Border.Background>
+                        <ImageBrush ImageSource="../Assets/Image/CarbonAlignBoxTopLeft.png"/>
+                    </Border.Background>
+                </Border>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                    个人记事本
+                </TextBlock>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Margin="20,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45"/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition MinHeight="23" Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="&#xe682;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
+                    <TextBox Text="啊啊啊啊" Grid.Column="1" Height="40"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="&#xe82b;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
+                    <PasswordBox Password="啊啊啊啊" Grid.Column="1" Height="40"/>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="80"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="&#xe63d;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
+                    <TextBox Text="啊啊啊啊" Grid.Column="1" Height="40"/>
+                    <Image Grid.Column="2"/>
+                </Grid>
+                <Button Content="登录" Margin="5" Style="{StaticResource ButtonPrimary}" Grid.Row="4"/>
+                <TextBlock Text="登录失败" Foreground="Red" Grid.Row="5" TextWrapping="Wrap"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
+            
+        </Grid>
+    </Border>
+</Window>
