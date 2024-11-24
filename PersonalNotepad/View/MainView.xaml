@@ -12,6 +12,9 @@
             <TabItem Header="首页">
                 <!--软件名称-->
                 <StackPanel>
+                    <Viewbox MaxWidth="520">
+                        <hc:FlipClock Margin="32"/>
+                    </Viewbox>
                     <hc:TransitioningContentControl>
                         <hc:AutoCompleteTextBox Width="380" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="32" ItemsSource="{Binding Items}" Text="{Binding SearchText}" DisplayMemberPath="Name"/>
                     </hc:TransitioningContentControl>

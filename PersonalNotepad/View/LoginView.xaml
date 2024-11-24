@@ -104,6 +104,13 @@
                     <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Grid.Row="5" TextWrapping="Wrap"
                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
+                <hc:StepBar IsMouseSelectable="True" Margin="0,0,0,32" Grid.Row="2" Grid.ColumnSpan="2" Dock="Bottom"
+            StepIndex="{Binding StepIndex, Mode=TwoWay}">
+                    <hc:StepBarItem Content="填写用户名"/>
+                    <hc:StepBarItem Content="填写密码"/>
+                    <hc:StepBarItem Content="填写验证码"/>
+                    <hc:StepBarItem Content="完成"/>
+                </hc:StepBar>
             </Grid>
             <ScrollViewer VerticalScrollBarVisibility="Hidden" HorizontalAlignment="Right">
                 <StackPanel hc:Growl.GrowlParent="True" VerticalAlignment="Top" Margin="0,10,10,10"/>

@@ -3,6 +3,7 @@ using Microsoft.Data.Sqlite;
 using PersonalNotepad.Common;
 using PersonalNotepad.Model;
 using System;
+using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,11 +22,21 @@ namespace PersonalNotepad.ViewModel
         string databasePath = DatabaseHelper.GetDatabasePath();
 
         private string _errorMessage;
-
         public string ErrorMessage
         {
             get { return _errorMessage; }
             set { _errorMessage = value; this.DoNotify(); }
+        }
+
+        private int _stepIndex;
+        public int StepIndex
+        {
+            get => _stepIndex;
+            set
+            {
+                _stepIndex = value;
+                this.DoNotify();
+            }
         }
 
         public string DateStr { get; set; }
@@ -51,33 +62,53 @@ namespace PersonalNotepad.ViewModel
             this.LoginCommand = new CommandBase();
             this.LoginCommand.DoExecute = new Action<object>(DoLogin);
             this.LoginCommand.DoCanExecute = new Func<object, bool>((o) => { return true; });
+
+            // 初始化 StepIndex
+            this.StepIndex = 0;
+
+            // 监听属性变化
+            LoginModel.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(LoginModel.UserName) && !string.IsNullOrEmpty(LoginModel.UserName))
+                {
+                    StepIndex = 1;
+                }
+                else if (args.PropertyName == nameof(LoginModel.Password) && !string.IsNullOrEmpty(LoginModel.Password))
+                {
+                    StepIndex = 2;
+                }
+                else if (args.PropertyName == nameof(LoginModel.ValidationCode) && !string.IsNullOrEmpty(LoginModel.ValidationCode))
+                {
+                    StepIndex = 3;
+                }
+            };
         }
 
-        private void DoLogin(object o)
+        private async void DoLogin(object o)
         {
             this.ErrorMessage = "";
             if (string.IsNullOrEmpty(LoginModel.UserName))
             {
                 this.ErrorMessage = "用户名不能为空";
-                Task.Run(() => Growl.WarningGlobal("用户名不能为空"));
+                await Task.Run(() => Growl.WarningGlobal("用户名不能为空"));
                 return;
             }
             if (string.IsNullOrEmpty(LoginModel.Password))
             {
                 this.ErrorMessage = "密码不能为空";
-                Task.Run(() => Growl.WarningGlobal("密码不能为空"));
+                await Task.Run(() => Growl.WarningGlobal("密码不能为空"));
                 return;
             }
             if (string.IsNullOrEmpty(LoginModel.ValidationCode))
             {
                 this.ErrorMessage = "验证码不能为空";
-                Task.Run(() => Growl.WarningGlobal("验证码不能为空"));
+                await Task.Run(() => Growl.WarningGlobal("验证码不能为空"));
                 return;
             }
             if (LoginModel.ValidationCode.ToLower() != DateStr)
             {
                 this.ErrorMessage = "验证码错误";
-                Task.Run(() => Growl.WarningGlobal("验证码错误"));
+                await Task.Run(() => Growl.WarningGlobal("验证码错误"));
                 return;
             }
 
@@ -102,7 +133,10 @@ namespace PersonalNotepad.ViewModel
                                 string inputPasswordHash = ComputeMD5Hash(LoginModel.Password);
                                 if (storedPassword == inputPasswordHash)
                                 {
-                                    Task.Run(() => Growl.SuccessGlobal("登录成功！"));
+                                    await Task.Run(() => Growl.SuccessGlobal("登录成功！"));
+                                    await Task.Run(() => Growl.SuccessGlobal("等待跳转！"));
+
+                                    await Task.Delay(2000);
                                     Application.Current.Dispatcher.Invoke(new Action(() =>
                                     {
                                         var window = o as System.Windows.Window;
@@ -119,7 +153,7 @@ namespace PersonalNotepad.ViewModel
                                 else
                                 {
                                     this.ErrorMessage = "密码错误";
-                                    Task.Run(() => Growl.ErrorGlobal("密码错误"));
+                                    await Task.Run(() => Growl.ErrorGlobal("密码错误"));
                                 }
                             }
                             else
@@ -136,14 +170,14 @@ namespace PersonalNotepad.ViewModel
                                         insertCommand.Parameters.Add(new SqliteParameter("@user_name", LoginModel.UserName));
                                         insertCommand.Parameters.Add(new SqliteParameter("@password", hashedPassword));
                                         insertCommand.ExecuteNonQuery();
-                                        Task.Run(() => Growl.SuccessGlobal("用户创建成功！"));
+                                        await Task.Run(() => Growl.SuccessGlobal("用户创建成功！"));
                                     }
                                 }
                                 else
                                 {
                                     // 用户选择否，不创建新用户
                                     this.ErrorMessage = "用户未创建";
-                                    Task.Run(() => Growl.WarningGlobal("用户未创建"));
+                                    await Task.Run(() => Growl.WarningGlobal("用户未创建"));
                                 }
                             }
                         }
@@ -152,7 +186,7 @@ namespace PersonalNotepad.ViewModel
                 catch (Exception ex)
                 {
                     this.ErrorMessage = "数据库连接失败: " + ex.Message;
-                    Task.Run(() => Growl.ErrorGlobal("数据库连接失败: " + ex.Message));
+                    await Task.Run(() => Growl.ErrorGlobal("数据库连接失败: " + ex.Message));
                 }
                 finally
                 {

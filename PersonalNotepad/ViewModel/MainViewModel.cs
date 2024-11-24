@@ -9,6 +9,16 @@ namespace PersonalNotepad.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        public LoginViewModel LoginViewModel { get; set; }
+        public StepBarViewModel StepBarViewModel { get; set; }
+
+        public MainViewModel()
+        {
+            LoginViewModel = new LoginViewModel();
+            StepBarViewModel = new StepBarViewModel();
+            CurrentDateTime = DateTime.Now;
+        }
+
         private DateTime _currentDateTime;
         public DateTime CurrentDateTime
         {
@@ -18,11 +28,6 @@ namespace PersonalNotepad.ViewModel
                 _currentDateTime = value;
                 OnPropertyChanged(nameof(CurrentDateTime));
             }
-        }
-
-        public MainViewModel()
-        {
-            CurrentDateTime = DateTime.Now;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
