@@ -42,7 +42,7 @@ namespace PersonalNotepad.ViewModel
         public string DateStr { get; set; }
         public void GetCurrentTime(object sender, EventArgs e)
         {
-            DateStr = DateTime.Now.ToString("MM-dd");
+            DateStr = DateTime.Now.ToString("HH-mm");
         }
 
         public LoginViewModel()
@@ -55,7 +55,7 @@ namespace PersonalNotepad.ViewModel
             this.CloseWindowCommand = new CommandBase();
             this.CloseWindowCommand.DoExecute = new Action<object>((o) =>
             {
-                (o as System.Windows.Window).Close();
+                ((System.Windows.Window)o).Close();
             });
             this.CloseWindowCommand.DoCanExecute = new Func<object, bool>((o) => { return true; });
 

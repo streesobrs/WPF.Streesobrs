@@ -20,20 +20,8 @@
                     </hc:TransitioningContentControl>
                     <!--列表（用来读取数据库然后显示笔记列表）-->
                     <DataGrid HeadersVisibility="All" RowHeaderWidth="60" AutoGenerateColumns="False" ItemsSource="{Binding DataList}">
-                        <DataGrid.RowHeaderTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsSelected,RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
-                            </DataTemplate>
-                        </DataGrid.RowHeaderTemplate>
                         <DataGrid.Columns>
-                            <DataGridTextColumn IsReadOnly="True" Width="80" CanUserResize="False" Binding="{Binding Index}" Header="日期"/>
-                            <DataGridTemplateColumn Width="60" CanUserResize="False">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Image Source="{Binding ImgPath}" Width="32" Height="32" Stretch="Uniform"/>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            <DataGridTextColumn IsReadOnly="True" Width="80" CanUserResize="False"  Header="日期"/>
                             <DataGridTextColumn Width="1" Binding="{Binding Name}" Header="标题"/>
                             <DataGridTextColumn Width="1" Binding="{Binding Remark}" Header="内容"/>
                         </DataGrid.Columns>

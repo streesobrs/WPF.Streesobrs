@@ -43,9 +43,9 @@
 
                 <Border Background="#007dfa" CornerRadius="10 10 0 0" MouseLeftButtonDown="Border_MouseLeftButtonDown"/>
                 <Button VerticalAlignment="Top" HorizontalAlignment="Right" Width="40" Height="30" 
-            Template="{StaticResource CloseButtonTemplate}" 
-            Command="{Binding CloseWindowCommand}" 
-            CommandParameter="{Binding ElementName=LoginWindow}"/>
+                    Template="{StaticResource CloseButtonTemplate}" 
+                    Command="{Binding CloseWindowCommand}" 
+                    CommandParameter="{Binding ElementName=LoginWindow}"/>
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Border Width="100" Height="100">
@@ -53,7 +53,7 @@
                             <ImageBrush ImageSource="../Assets/Image/CarbonAlignBoxTopLeft.png"/>
                         </Border.Background>
                     </Border>
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold">
             个人记事本
                     </TextBlock>
                 </StackPanel>
@@ -73,7 +73,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="&#xe682;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
-                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
+                            VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
                         <TextBox Text="{Binding LoginModel.UserName}" Grid.Column="1" Height="40"/>
                     </Grid>
                     <Grid Grid.Row="2">
@@ -94,18 +94,20 @@
                             <ColumnDefinition Width="80"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="&#xe63d;" FontFamily="../Assets/Fonts/#iconfont" FontSize="25" 
-                VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
+                            VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#ddd"/>
                         <TextBox Text="{Binding LoginModel.ValidationCode}" Grid.Column="1" Height="40"/>
                         <TextBlock Name="Date" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Grid.Column="2"/>
                     </Grid>
                     <Button Content="登录" Margin="5" Style="{StaticResource ButtonPrimary}" Grid.Row="4"
+                            Width="100"
                             Command="{Binding LoginCommand}"
                             CommandParameter="{Binding ElementName=LoginWindow}"/>
                     <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Grid.Row="5" TextWrapping="Wrap"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Grid>
                 <hc:StepBar IsMouseSelectable="True" Margin="0,0,0,32" Grid.Row="2" Grid.ColumnSpan="2" Dock="Bottom"
-            StepIndex="{Binding StepIndex, Mode=TwoWay}">
+                            HorizontalAlignment="Center" VerticalAlignment="Center"
+                            StepIndex="{Binding StepIndex, Mode=TwoWay}">
                     <hc:StepBarItem Content="填写用户名"/>
                     <hc:StepBarItem Content="填写密码"/>
                     <hc:StepBarItem Content="填写验证码"/>

@@ -46,7 +46,7 @@ namespace PersonalNotepad.View
 
         public void GetCurrentTime(object sender, EventArgs e)
         {
-            DateStr = DateTime.Now.ToString("MM-dd");
+            DateStr = DateTime.Now.ToString("HH-mm");
 
             this.Date.Text = DateStr;//WPF中有控件名为Date
         }
